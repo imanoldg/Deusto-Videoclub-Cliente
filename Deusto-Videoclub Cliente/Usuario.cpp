@@ -2,7 +2,7 @@
  * Usuario.cpp
  *
  *  Created on: 16 may 2024
- *      Author: Usuario
+ *      Author: Imanol
  */
 #include "Usuario.h"
 #include <iostream>
@@ -10,7 +10,7 @@
 using namespace std;
 
 
-Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char genero, char* fechaNcto, int numTarjeta, int puntos){
+Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char* genero, char* fechaNcto, int numTarjeta, int puntos){
 	strcpy(this->dni, dni);
 	strcpy(this->nombre, nombre);
 	strcpy(this->apellido, apellido);
@@ -18,7 +18,7 @@ Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telef
 	this->telefono = telefono;
 	strcpy(this->user, user);
 	strcpy(this->contra, contra);
-	this->genero = genero;
+	strcpy(this->genero, genero);
 	this->fechaNcto = new char(strlen(fechaNcto) + 1);
 	strcpy(this->fechaNcto, fechaNcto);
 	this->numTarjeta = numTarjeta;
@@ -33,7 +33,7 @@ Usuario::Usuario(){
 	this->telefono = 0;
 	strcpy(this->user, "");
 	strcpy(this->contra, "");
-	this->genero = 'M';
+	strcpy(this->genero, "");
 	this->fechaNcto = new char(strlen("") + 1);
 	strcpy(this->fechaNcto, "");
 	this->numTarjeta = 0;
@@ -48,7 +48,7 @@ Usuario::Usuario(Usuario &otro){
 	this->telefono = otro.telefono;
 	strcpy(this->user, otro.user);
 	strcpy(this->contra, otro.contra);
-	this->genero = otro.genero;
+	strcpy(this->genero, otro.genero);
 	this->fechaNcto = new char(strlen(otro.fechaNcto) + 1);
 	strcpy(this->fechaNcto, otro.fechaNcto);
 	this->numTarjeta = otro.numTarjeta;
@@ -88,7 +88,7 @@ char* Usuario::getContra(){
 	return this->contra;
 }
 
-char Usuario::getGenero(){
+char* Usuario::getGenero(){
 	return this->genero;
 }
 
@@ -129,8 +129,8 @@ void Usuario::setFechaNcto(char* fecha){
 	strcpy(this->fechaNcto, fecha);
 }
 
-void Usuario::setGenero(char genero){
-	this->genero= genero;
+void Usuario::setGenero(char* genero){
+	strcpy(this->genero, genero);
 }
 
 void Usuario::setNombre(char* nombre){
@@ -148,5 +148,4 @@ void Usuario::setTlf(int tlf){
 void Usuario::setUser(char* user){
 	strcpy(this->user, user);
 }
-
 

@@ -2,8 +2,9 @@
  * Usuario.h
  *
  *  Created on: 16 may 2024
- *      Author: Usuario
+ *      Author: Imanol
  */
+
 #ifndef USUARIO_H_
 #define USUARIO_H_
 
@@ -16,13 +17,13 @@ private:
 	int telefono;
 	char user[40];
 	char contra[16];
-	char genero;
+	char genero[2];
 	char* fechaNcto;
 	int numTarjeta;
 	int puntos;
 
 public:
-	Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char genero, char* fechaNcto, int numTarjeta, int puntos);
+	Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char* genero, char* fechaNcto, int numTarjeta, int puntos);
 	Usuario();
 	Usuario(Usuario &u);
 	~Usuario();
@@ -34,7 +35,7 @@ public:
 	int getTlf();
 	char* getUser();
 	char* getContra();
-	char getGenero();
+	char* getGenero();
 	char* getFechaNcto();
 	int getNumTarjeta();
 	int getPuntos();
@@ -47,11 +48,10 @@ public:
 	void setTlf(int tlf);
 	void setUser(char* user);
 	void setContra(char* contra);
-	void setGenero(char genero);
+	void setGenero(char* genero);
 	void setFechaNcto(char* fecha);
 	void setNumTarjeta(int numTarj);
 };
 
 #endif /* USUARIO_H_ */
-
 

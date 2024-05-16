@@ -70,7 +70,7 @@ int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario& u
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setContra(recvBuff);
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
-	u.setGenero((char) recvBuff);
+	u.setGenero(recvBuff);
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setFechaNcto(recvBuff);
 	recv(*s, recvBuff, sizeof(recvBuff), 0);

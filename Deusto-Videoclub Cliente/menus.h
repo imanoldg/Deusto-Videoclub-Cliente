@@ -7,10 +7,11 @@
 
 #ifndef MENUS_H_
 #define MENUS_H_
+#include <winsock2.h>
 
-void inicio();
+void inicio(SOCKET* s);
 void recuperarContra();
-void inicioSesion();
+void inicioSesion(SOCKET* s);
 void menuPrincipal();
 void estatPeliculas();
 void topGeneros();

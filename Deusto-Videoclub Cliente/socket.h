@@ -14,6 +14,6 @@
 #define SERVER_PORT 6000
 
 int SocketInit(SOCKET* s);
-int comandoIniciarSesion(SOCKET* s, char* dni, char* contrasena, Usuario& u);
+int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasena, Usuario& u);
 
 #endif /* SOCKET_H_ */
