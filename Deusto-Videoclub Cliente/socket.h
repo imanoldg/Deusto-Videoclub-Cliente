@@ -13,7 +13,7 @@
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 6000
 
-int setUpSocket(SOCKET* s);
-int enviarComandoIniciarSesion(SOCKET* s, char* dni, char* contrasena, Usuario& u);
+int SocketInit(SOCKET* s);
+int comandoIniciarSesion(SOCKET* s, char* dni, char* contrasena, Usuario& u);
 
 #endif /* SOCKET_H_ */
