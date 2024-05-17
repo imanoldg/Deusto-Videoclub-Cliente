@@ -94,11 +94,247 @@ void menuPrincipal(){
 	cout << endl;
 	cout << "1. Estadisticas Peliculas" << endl;
 	cout << "2.Consultar Puntos y Ofertas" << endl;
-	cout << "3. Cerrar Sesión" << endl;
+	cout << "3. Salir" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
 	int opcion;
 	cin>>opcion;
 
+	switch(opcion){
+	case 1: estatPeliculas();
+			break;
+	case 2: menuOfertasPuntos();
+			break;
+	case 3: break;
+	default: break;;
+	}
+}
 
+void estatPeliculas(){
+	cout << endl;
+	cout << endl;
+	cout << "ESTADISTICAS PELICULAS" << endl;
+	cout << "=======================================" << endl;
+	cout << endl;
+	cout << "1. Peliculas mas alquiladas" << endl;
+	cout << "2.Top por genero" << endl;
+	cout << "3. Volver" << endl;
+	cout << endl;
+	cout << "Introducir opcion: ";
+	int opcion;
+	cin>>opcion;
+
+	switch(opcion){
+	case 1: pelisMasAlquiladas();
+			break;
+	case 2: topGeneros();
+			break;
+	case 3: menuPrincipal();
+			break;
+	default: break;
+	}
+}
+
+void topGeneros(){
+	cout << endl;
+	cout << endl;
+	cout << "GENEROS" << endl;
+	cout << "=======================================" << endl;
+	cout << endl;
+	cout << "1. Accion" << endl << "2.Drama" << endl << "3. Ciencia Ficcion" << endl
+			<< "4.Clasicas" << endl << "5.Comedia" << endl << "6.Terror" << endl << "7.Romanticas" << endl << endl;
+
+	int opcion;
+	cout << "Introduce una opcion: ";
+	cin >> opcion;
+
+	switch(opcion){
+	case 1: //SACAR EL TOP DE ACCION
+	case 2: //SACAR EL TOP DE DRAMA
+	case 3: //SACAR EL TOP DE CIENCIA FICCION
+	case 4: //SACAR EL TOP DE CLASICAS
+	case 5: //SACAR EL TOP DE COMEDIA
+	case 6: //SACAR EL TOP DE TERROR
+	case 7: //SACAR EL TOP DE ROMANTICAS
+	default: break;
+	}
+}
+
+void pelisMasAlquiladas(){
+	cout << endl;
+	cout << endl;
+	cout << "PELICULAS MAS ALQUILADAS" << endl;
+	cout << "=======================================" << endl;
+	cout << endl;
+
+	//SACAR LAS PELICULAS MAS ALQUILADAS
+
+
+	//HACER QUE INTRODUZCA EL NOMBRE DE LA PELICULA DE LA QUE SE DESEA VER LOS DATOS
+	char* nombrePeli;
+	cout<< "Introduce el titulo de la pelicula: ";
+	cin >> nombrePeli;
+	datosPelicula(nombrePeli);
+}
+
+void datosPelicula(char* nombrePeli){
+	cout << endl;
+	cout << endl;
+	cout << "PELICULA: " << nombrePeli <<  endl;
+	cout << "=======================================" << endl;
+	cout << endl;
+	//SACAR ESTOS DATOS DEL FICHERO DE PELICULAS
+	cout << "Duracion: " << endl;
+	cout << "Genero: " << endl;
+	cout << "Nota: " << endl;
+	cout << "Sinopsis: " << endl;
+	cout << endl;
+
+	char* q;
+	cout << "(Q para salir)";
+	cin >> q;
+
+	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
+		menuPrincipal();
+	}
+}
+
+void menuOfertasPuntos(){
+	cout << endl;
+	cout << endl;
+	cout << "MENU PUNTOS Y OFERTAS " << endl;
+	cout << "=======================================" << endl;
+	cout << endl;
+	cout << "1. Ofertas" << endl;
+	cout << "2.Mis puntos" << endl;
+	cout << "3. Volver al menu" << endl;
+	cout << endl;
+	cout << "Introducir opcion: ";
+
+	int opcion;
+	cin >> opcion;
+
+	switch(opcion){
+	case 1: menuOfertas();
+			break;
+	case 2: menuPuntos();
+			break;
+	case 3: menuPrincipal();
+			break;
+	default: break;
+	}
+}
+
+void menuPuntos(){
+	cout << endl;
+	cout << endl;
+	cout << "TUS PELICULAS ALQUILADAS" << endl;
+	cout << "=======================================" << endl;
+
+	/*SACAR UNA LISTA DE LAS PELICULAS ALQUILADAS POR EL USUARIO.
+		ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
+		AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
+
+	cout << endl;
+	cout << "=======================================" << endl;
+	cout << "SISTEMA DE PUNTUAJE" << endl;
+	cout << "=======================================" << endl;
+	cout << "- 3 dias: 3 puntos";
+	cout << "- 5 dias: 5 puntos";
+	cout << "- 7 dias: 7 puntos";
+
+	char* q;
+	cout << "(Q para volver)";
+	cin >> q;
+
+	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
+		menuOfertasPuntos();
+	}
+}
+
+void menuOfertas(){
+	cout << endl;
+	cout << endl;
+	cout << "OFERTAS POR PUNTOS" << endl;
+	cout << "=======================================" << endl;
+	cout << endl;
+	cout << "1. Refrescos" << endl;
+	cout << "2. Snacks" << endl;
+	cout << "3. Volver al menu" << endl;
+	cout << endl;
+	cout << "Introducir opcion: ";
+
+	int opcion;
+	cin >> opcion;
+
+	switch(opcion){
+	case 1: ofertasRefrescos();
+			break;
+	case 2: ofertasSnacks();
+			break;
+	case 3: menuOfertasPuntos();
+			break;
+	default: break;
+	}
+}
+
+void ofertasSnacks(){
+	cout << endl;
+	cout << endl;
+	cout << "SNACKS" << endl;
+	cout << "=======================================" << endl;
+	cout << "1. Doritos (30 puntos)" << endl;
+	cout << "2. Patatas fritas (25 puntos)" << endl;
+	cout << "3. Cheetos Pandilla (32 puntos)" << endl;
+	cout << "4. Pelotazos (40 puntos)" << endl;
+	cout << "5. Volver a las ofertas" << endl;
+	cout << endl;
+	cout << "Introducir opcion: ";
+
+	int opcion;
+	cin >> opcion;
+
+	/*ACCEDER A LA BASE DE DATOS Y QUITARLE LOS PUNTOS PROPORCIONALES A LA OPCION ELEGIDA AL USUARIO
+	 * PRINTEAR POR EJEMPLO "DORITOS CANJEADOS POR 30 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS
+	 */
+	switch(opcion){
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5: menuOfertas();
+			break;
+	default: break;
+	}
+}
+
+
+void ofertasRefrescos(){
+	cout << endl;
+	cout << endl;
+	cout << "REFRESCOS" << endl;
+	cout << "=======================================" << endl;
+	cout << "1. Sprite (20 puntos)" << endl;
+	cout << "2. Kas (15 puntos)" << endl;
+	cout << "3. Coca cola(35 puntos)" << endl;
+	cout << "4. Monster (40 puntos)" << endl;
+	cout << "5. Volver a las ofertas" << endl;
+	cout << endl;
+	cout << "Introducir opcion: ";
+
+	int opcion;
+	cin >> opcion;
+
+	/*ACCEDER A LA BASE DE DATOS Y QUITARLE LOS PUNTOS PROPORCIONALES A LA OPCION ELEGIDA AL USUARIO
+	 * PRINTEAR POR EJEMPLO "SPRITE CANJEADO POR 20 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS
+	 */
+	switch(opcion){
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5: menuOfertas();
+			break;
+	default: break;
+	}
 }

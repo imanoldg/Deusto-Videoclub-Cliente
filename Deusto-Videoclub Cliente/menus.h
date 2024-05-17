@@ -16,12 +16,11 @@ void menuPrincipal();
 void estatPeliculas();
 void topGeneros();
 void pelisMasAlquiladas();
-void datosPelicula();
+void datosPelicula(char* nombrePeli);
 void menuOfertasPuntos();
 void menuPuntos();
 void menuOfertas();
 void ofertasRefrescos();
 void ofertasSnacks();
-void ofertasAlquileres();
 
 #endif /* MENUS_H_ */

@@ -14,7 +14,7 @@ using namespace std;
 
 int main(void){
 	SOCKET* s;
-	SocketInit(s);
+	//SocketInit(s);
 
 	inicio(s);
 	return 1;
