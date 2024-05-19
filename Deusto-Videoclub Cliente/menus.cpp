@@ -9,6 +9,7 @@
 #include "socket.h"
 #include "Usuario.h"
 #include <iostream>
+#include <windows.h>
 #include <winsock2.h>
 
 #include "Peliculas.h"
@@ -31,11 +32,9 @@ void inicio(SOCKET* s){
 
 	switch(opcion){
 	case 1: inicioSesion(s);
-			break;
 	case 2: recuperarContra(s);
-			break;
-	case 3: break;
-	default: break;
+	case 3:
+	default: NULL;
 	}
 }
 
@@ -53,8 +52,18 @@ void recuperarContra(SOCKET* s){
 	char* contrasenha;
 	cin >> contrasenha;
 
+	char* q;
+	cout << "(Q para volver)";
+	cin >> q;
+
+
 	//BUSCAR EL DNI DE LA PERSONA EN LA BASE DE DATOS Y ESTABLECER LA CONTRASEÑA INTRODUCIDA
 	comandoPassChange(s, dni, contrasenha);
+
+	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
+		inicio(s);
+	}
+
 }
 
 void inicioSesion(SOCKET* s){
@@ -72,6 +81,7 @@ void inicioSesion(SOCKET* s){
 	//Se crea el usuario con parametros vacios y se pasa como referencia al metodo de socket
 	Usuario u;
 	int correcto = comandoIniciarSesion(s, usuario, contrasenha, u);
+	Sleep(3000);
 
 	if(correcto == 1){
 		cout << endl;
