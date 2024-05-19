@@ -49,7 +49,7 @@ void recuperarContra(SOCKET* s){
 	char* dni;
 	cin >> dni;
 	cout << endl;
-	cout << "Introducir contraseña nueva";
+	cout << "Introducir contraseña nueva: ";
 	char* contrasenha;
 	cin >> contrasenha;
 
