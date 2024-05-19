@@ -97,6 +97,9 @@ void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
 	strcpy(sendBuff, contrasenha);
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	cout << recvBuff << endl;
 }
 
 Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
@@ -106,4 +109,16 @@ Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 	strcpy(sendBuff, u.getDNI());
 	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	Peliculas p;
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	p.setNumPeliculas(atoi(recvBuff));
+
+	for (int i = 0; i < p.getNumPeliculas() - 1; ++i) {
+		recv(*s, recvBuff, sizeof(recvBuff), 0);
+		p.setNombre(recvBuff, i);
+	}
+
+	return p;
 }
