@@ -6,14 +6,16 @@
  */
 #include "Pelicula.h"
 #include "string.h"
+#include <iostream>
+using namespace std;
 
 Pelicula::Pelicula(){
-	this->peliculas = "";
+	this->peliculas = NULL;
 	this->numPeliculas = 0;
 }
 
 Pelicula::Pelicula(char* peliculas, int numPeliculas){
-	this->peliculas = new char[numPeliculas];
+	this->peliculas = new char*[numPeliculas];
 	this->numPeliculas = numPeliculas;
 }
 

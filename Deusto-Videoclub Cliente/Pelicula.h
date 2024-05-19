@@ -10,7 +10,7 @@
 
 class Pelicula{
 private:
-	char* peliculas;
+	char** peliculas;
 	int numPeliculas;
 
 public:
