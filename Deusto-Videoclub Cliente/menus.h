@@ -8,19 +8,20 @@
 #ifndef MENUS_H_
 #define MENUS_H_
 #include <winsock2.h>
+#include "Usuario.h"
 
 void inicio(SOCKET* s);
-void recuperarContra();
+void recuperarContra(SOCKET* s);
 void inicioSesion(SOCKET* s);
-void menuPrincipal();
-void estatPeliculas();
-void topGeneros();
-void pelisMasAlquiladas();
-void datosPelicula(char* nombrePeli);
-void menuOfertasPuntos();
-void menuPuntos();
-void menuOfertas();
-void ofertasRefrescos();
-void ofertasSnacks();
+void menuPrincipal(SOCKET* s, Usuario u);
+void estatPeliculas(SOCKET *s, Usuario u);
+void topGeneros(SOCKET *s, Usuario u);
+void pelisMasAlquiladas(SOCKET *s, Usuario u);
+void datosPelicula(SOCKET *s, char* nombrePeli, Usuario u);
+void menuOfertasPuntos(SOCKET *s, Usuario u);
+void menuPuntos(SOCKET *s, Usuario u);
+void menuOfertas(SOCKET *s, Usuario u);
+void ofertasRefrescos(SOCKET *s, Usuario u);
+void ofertasSnacks(SOCKET *s, Usuario u);
 
 #endif /* MENUS_H_ */

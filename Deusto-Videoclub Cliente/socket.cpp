@@ -5,6 +5,8 @@
  *      Author: Usuario
  */
 #include "socket.h"
+#include "Usuario.h"
+#include "Pelicula.h"
 
 #include <winsock2.h>
 #include <iostream>
@@ -46,7 +48,7 @@ int SocketInit(SOCKET* s){
 	return 0;
 }
 
-int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario& u){
+int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u){
 	char sendBuff[512], recvBuff[512];
 
 	strcpy(sendBuff, "SESION_INIT");
@@ -85,3 +87,23 @@ int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario& u
 
 }
 
+void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
+	char sendBuff[512], recvBuff[512];
+
+	strcpy(sendBuff, "PASS_CHANGE");
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+	strcpy(sendBuff, dni);
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+	strcpy(sendBuff, contrasenha);
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+}
+
+Pelicula* comandoGetAlquileres(SOCKET* s, Usuario &u){
+	char sendBuff[512], recvBuff[512];
+
+	strcpy(sendBuff, "GET_ALQUILERES");
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+	strcpy(sendBuff, u.getDNI());
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+}

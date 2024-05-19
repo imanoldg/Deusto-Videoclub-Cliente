@@ -9,11 +9,13 @@
 
 #include <winsock2.h>
 #include "Usuario.h"
+#include "Pelicula.h"
 
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 6000
 
 int SocketInit(SOCKET* s);
-int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasena, Usuario& u);
-
+int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasena, Usuario &u);
+void comandoPassChange(SOCKET* s, char* dni, char* contrasenha);
+Pelicula* comandoGetAlquileres(SOCKET* s, Usuario &u);
 #endif /* SOCKET_H_ */

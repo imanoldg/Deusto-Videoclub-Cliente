@@ -8,6 +8,7 @@
 #include "string.h"
 #include "socket.h"
 #include "Usuario.h"
+#include "Pelicula.h"
 #include <iostream>
 #include <winsock2.h>
 using namespace std;
@@ -30,14 +31,14 @@ void inicio(SOCKET* s){
 	switch(opcion){
 	case 1: inicioSesion(s);
 			break;
-	case 2: recuperarContra();
+	case 2: recuperarContra(s);
 			break;
 	case 3: break;
 	default: break;
 	}
 }
 
-void recuperarContra(){
+void recuperarContra(SOCKET* s){
 	cout << endl;
 	cout << endl;
 	cout << "RECUPERAR CONTRASEÑA" << endl;
@@ -51,7 +52,8 @@ void recuperarContra(){
 	char* contrasenha;
 	cin >> contrasenha;
 
-	//BUSCAR EL DNI DE LA PERSONA EN LA BASE DE DATOS Y COMPARAR CON LA CONTRASEÑA INTRODUCIDA
+	//BUSCAR EL DNI DE LA PERSONA EN LA BASE DE DATOS Y ESTABLECER LA CONTRASEÑA INTRODUCIDA
+	comandoPassChange(s, dni, contrasenha);
 }
 
 void inicioSesion(SOCKET* s){
@@ -75,7 +77,7 @@ void inicioSesion(SOCKET* s){
 		cout<< endl;
 		cout << "USUARIO Y CONTRASEÑA CORRECTOS, INICIANDO SESION" << endl;
 
-		menuPrincipal();
+		menuPrincipal(s, u);
 	} else{
 		cout << endl;
 		cout<< endl;
@@ -86,14 +88,14 @@ void inicioSesion(SOCKET* s){
 
 }
 
-void menuPrincipal(){
+void menuPrincipal(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "BIENVENIDO AL MENU PRINCIPAL" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
 	cout << "1. Estadisticas Peliculas" << endl;
-	cout << "2.Consultar Puntos y Ofertas" << endl;
+	cout << "2. Consultar Puntos y Ofertas" << endl;
 	cout << "3. Salir" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
@@ -101,23 +103,23 @@ void menuPrincipal(){
 	cin>>opcion;
 
 	switch(opcion){
-	case 1: estatPeliculas();
+	case 1: estatPeliculas(s, u);
 			break;
-	case 2: menuOfertasPuntos();
+	case 2: menuOfertasPuntos(s, u);
 			break;
 	case 3: break;
 	default: break;;
 	}
 }
 
-void estatPeliculas(){
+void estatPeliculas(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "ESTADISTICAS PELICULAS" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
 	cout << "1. Peliculas mas alquiladas" << endl;
-	cout << "2.Top por genero" << endl;
+	cout << "2. Top por genero" << endl;
 	cout << "3. Volver" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
@@ -125,28 +127,29 @@ void estatPeliculas(){
 	cin>>opcion;
 
 	switch(opcion){
-	case 1: pelisMasAlquiladas();
+	case 1: pelisMasAlquiladas(s, u);
 			break;
-	case 2: topGeneros();
+	case 2: topGeneros(s, u);
 			break;
-	case 3: menuPrincipal();
 			break;
 	default: break;
 	}
 }
 
-void topGeneros(){
+void topGeneros(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "GENEROS" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
-	cout << "1. Accion" << endl << "2.Drama" << endl << "3. Ciencia Ficcion" << endl
-			<< "4.Clasicas" << endl << "5.Comedia" << endl << "6.Terror" << endl << "7.Romanticas" << endl << endl;
+	cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion" << endl
+			<< "4. Clasicas" << endl << "5. Comedia" << endl << "6. Terror" << endl << "7. Romanticas" << endl << endl;
 
 	int opcion;
 	cout << "Introduce una opcion: ";
 	cin >> opcion;
+
+	//SACAD LAS PELICULAS DEL FICHERO
 
 	switch(opcion){
 	case 1: //SACAR EL TOP DE ACCION
@@ -160,7 +163,7 @@ void topGeneros(){
 	}
 }
 
-void pelisMasAlquiladas(){
+void pelisMasAlquiladas(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "PELICULAS MAS ALQUILADAS" << endl;
@@ -174,10 +177,10 @@ void pelisMasAlquiladas(){
 	char* nombrePeli;
 	cout<< "Introduce el titulo de la pelicula: ";
 	cin >> nombrePeli;
-	datosPelicula(nombrePeli);
+	datosPelicula(s, nombrePeli, u);
 }
 
-void datosPelicula(char* nombrePeli){
+void datosPelicula(SOCKET *s, char* nombrePeli, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "PELICULA: " << nombrePeli <<  endl;
@@ -195,18 +198,18 @@ void datosPelicula(char* nombrePeli){
 	cin >> q;
 
 	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
-		menuPrincipal();
+		menuPrincipal(s, u);
 	}
 }
 
-void menuOfertasPuntos(){
+void menuOfertasPuntos(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "MENU PUNTOS Y OFERTAS " << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
 	cout << "1. Ofertas" << endl;
-	cout << "2.Mis puntos" << endl;
+	cout << "2. Mis puntos" << endl;
 	cout << "3. Volver al menu" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
@@ -215,17 +218,17 @@ void menuOfertasPuntos(){
 	cin >> opcion;
 
 	switch(opcion){
-	case 1: menuOfertas();
+	case 1: menuOfertas(s, u);
 			break;
-	case 2: menuPuntos();
+	case 2: menuPuntos(s, u);
 			break;
-	case 3: menuPrincipal();
+	case 3: menuPrincipal(s, u);
 			break;
 	default: break;
 	}
 }
 
-void menuPuntos(){
+void menuPuntos(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "TUS PELICULAS ALQUILADAS" << endl;
@@ -248,11 +251,11 @@ void menuPuntos(){
 	cin >> q;
 
 	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
-		menuOfertasPuntos();
+		menuOfertasPuntos(s, u);
 	}
 }
 
-void menuOfertas(){
+void menuOfertas(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "OFERTAS POR PUNTOS" << endl;
@@ -268,17 +271,17 @@ void menuOfertas(){
 	cin >> opcion;
 
 	switch(opcion){
-	case 1: ofertasRefrescos();
+	case 1: ofertasRefrescos(s, u);
 			break;
-	case 2: ofertasSnacks();
+	case 2: ofertasSnacks(s, u);
 			break;
-	case 3: menuOfertasPuntos();
+	case 3: menuOfertasPuntos(s, u);
 			break;
 	default: break;
 	}
 }
 
-void ofertasSnacks(){
+void ofertasSnacks(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "SNACKS" << endl;
@@ -302,14 +305,14 @@ void ofertasSnacks(){
 	case 2:
 	case 3:
 	case 4:
-	case 5: menuOfertas();
+	case 5: menuOfertas(s, u);
 			break;
 	default: break;
 	}
 }
 
 
-void ofertasRefrescos(){
+void ofertasRefrescos(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << endl;
 	cout << "REFRESCOS" << endl;
@@ -333,7 +336,7 @@ void ofertasRefrescos(){
 	case 2:
 	case 3:
 	case 4:
-	case 5: menuOfertas();
+	case 5: menuOfertas(s, u);
 			break;
 	default: break;
 	}
