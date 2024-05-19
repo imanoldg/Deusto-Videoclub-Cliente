@@ -8,9 +8,10 @@
 #include "string.h"
 #include "socket.h"
 #include "Usuario.h"
-#include "Pelicula.h"
 #include <iostream>
 #include <winsock2.h>
+
+#include "Peliculas.h"
 using namespace std;
 
 void inicio(SOCKET* s){

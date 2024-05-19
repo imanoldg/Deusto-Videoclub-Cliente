@@ -6,10 +6,10 @@
  */
 #include "socket.h"
 #include "Usuario.h"
-#include "Pelicula.h"
-
 #include <winsock2.h>
 #include <iostream>
+
+#include "Peliculas.h"
 using namespace std;
 
 int SocketInit(SOCKET* s){
@@ -99,7 +99,7 @@ void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
 
 }
 
-Pelicula* comandoGetAlquileres(SOCKET* s, Usuario &u){
+Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
 	char sendBuff[512], recvBuff[512];
 
 	strcpy(sendBuff, "GET_ALQUILERES");

@@ -5,18 +5,18 @@
  *      Author: Usuario
  */
 
-#ifndef PELICULA_H_
-#define PELICULA_H_
+#ifndef PELICULAS_H_
+#define PELICULAS_H_
 
-class Pelicula{
+class Peliculas{
 private:
 	char** peliculas;
 	int numPeliculas;
 
 public:
-	Pelicula();
-	Pelicula(char* peli, int numPeliculas);
-	virtual ~Pelicula();
+	Peliculas();
+	Peliculas(char* peli, int numPeliculas);
+	virtual ~Peliculas();
 
 	void setNombre(char* nombre, int orden);
 	char* getNombre(int orden);
@@ -24,4 +24,4 @@ public:
 	int getNumPeliculas();
 };
 
-#endif /* PELICULA_H_ */
+#endif /* PELICULAS_H_ */
