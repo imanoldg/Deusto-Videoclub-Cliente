@@ -89,24 +89,20 @@ void inicioSesion(SOCKET* s){
 		cout << endl;
 		cout<< endl;
 		cout << "USUARIO Y CONTRASEÑA CORRECTOS, INICIANDO SESION" << endl;
-		Sleep(1000);
-
 		menuPrincipal(s, u);
-	} else{
-		cout << endl;
-		cout<< endl;
-		cout << "ERROR INICIANDO SESION, VOLVIENDO A LA PAGINA DE INICIO" << endl;
-		inicio(s);
-
-		cout << endl;
+		Sleep(1000);
 	}
 
+	cout << endl;
+	cout<< endl;
+	cout << "ERROR INICIANDO SESION, VOLVIENDO A LA PAGINA DE INICIO" << endl;
+	inicio(s);
 
 }
 
 void menuPrincipal(SOCKET *s, Usuario u){
-	cout << endl;
-	cout << endl;
+	system("cls");
+	int opcion;
 	cout << "BIENVENIDO AL MENU PRINCIPAL" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
@@ -115,7 +111,6 @@ void menuPrincipal(SOCKET *s, Usuario u){
 	cout << "3. Salir" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
-	int opcion = 0;
 	cin>>opcion;
 
 	switch(opcion){
