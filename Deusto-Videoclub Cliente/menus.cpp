@@ -88,9 +88,20 @@ void inicioSesion(SOCKET* s){
 	if(correcto == 1){
 		cout << endl;
 		cout<< endl;
-		cout << "USUARIO Y CONTRASEÑA CORRECTOS, INICIANDO SESION" << endl;
+
+		cout << u.getDNI() << endl;
+		cout << u.getNombre() << endl;
+		cout << u.getApellido() << endl;
+		cout << u.getEmail() << endl;
+		cout << u.getTlf() << endl;
+		cout << u.getUser() << endl;
+		cout << u.getContra() << endl;
+		cout << u.getGenero() << endl;
+		cout << u.getFechaNcto() << endl;
+		cout << u.getNumTarjeta() << endl;
+		cout << u.getPuntos() << endl;
+		cout << "USUARIO Y CONTRASEÑA CORRECTOS, INICIANDO SESION";
 		menuPrincipal(s, u);
-		Sleep(1000);
 	}
 
 	cout << endl;
@@ -102,6 +113,17 @@ void inicioSesion(SOCKET* s){
 
 void menuPrincipal(SOCKET *s, Usuario u){
 	system("cls");
+	cout << u.getDNI() << endl;
+			cout << u.getNombre() << endl;
+			cout << u.getApellido() << endl;
+			cout << u.getEmail() << endl;
+			cout << u.getTlf() << endl;
+			cout << u.getUser() << endl;
+			cout << u.getContra() << endl;
+			cout << u.getGenero() << endl;
+			cout << u.getFechaNcto() << endl;
+			cout << u.getNumTarjeta() << endl;
+			cout << u.getPuntos() << endl;
 	int opcion;
 	cout << "BIENVENIDO AL MENU PRINCIPAL" << endl;
 	cout << "=======================================" << endl;
