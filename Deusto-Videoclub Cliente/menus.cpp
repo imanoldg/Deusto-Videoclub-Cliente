@@ -15,7 +15,7 @@
 #include "Peliculas.h"
 using namespace std;
 
-void inicio(SOCKET* s){
+void inicio(SOCKET *s) {
 	cout << "=======================================" << endl;
 	cout << "       ESTADISTICAS VIDEOCLUB" << endl;
 	cout << "=======================================" << endl;
@@ -30,17 +30,21 @@ void inicio(SOCKET* s){
 
 	cin >> opcion;
 
-	switch(opcion){
-	case 1: inicioSesion(s);
-			//break;
-	case 2: recuperarContra(s);
-			//break;
-	case 3:	break;
-	default: break;
+	switch (opcion) {
+	case 1:
+		inicioSesion(s);
+		//break;
+	case 2:
+		recuperarContra(s);
+		//break;
+	case 3:
+		break;
+	default:
+		break;
 	}
 }
 
-void recuperarContra(SOCKET* s){
+void recuperarContra(SOCKET *s) {
 	cout << endl;
 	cout << endl;
 	cout << "RECUPERAR CONTRASEÑA" << endl;
@@ -54,7 +58,6 @@ void recuperarContra(SOCKET* s){
 	char contrasenha[16];
 	cin >> contrasenha;
 
-
 	//BUSCAR EL DNI DE LA PERSONA EN LA BASE DE DATOS Y ESTABLECER LA CONTRASEÑA INTRODUCIDA
 	comandoPassChange(s, dni, contrasenha);
 
@@ -62,14 +65,13 @@ void recuperarContra(SOCKET* s){
 	cout << "(Q para volver)";
 	cin >> q;
 
-
-	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
+	if ((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
 		inicio(s);
 	}
 
 }
 
-void inicioSesion(SOCKET* s){
+void inicioSesion(SOCKET *s) {
 	char usuario[40];
 	char contrasenha[16];
 
@@ -85,9 +87,9 @@ void inicioSesion(SOCKET* s){
 	Usuario u;
 	int correcto = comandoIniciarSesion(s, usuario, contrasenha, u);
 
-	if(correcto == 1){
+	if (correcto == 1) {
 		cout << endl;
-		cout<< endl;
+		cout << endl;
 
 		cout << u.getDNI() << endl;
 		cout << u.getNombre() << endl;
@@ -101,29 +103,31 @@ void inicioSesion(SOCKET* s){
 		cout << u.getNumTarjeta() << endl;
 		cout << u.getPuntos() << endl;
 		cout << "USUARIO Y CONTRASEÑA CORRECTOS, INICIANDO SESION";
+
 		menuPrincipal(s, u);
+
 	}
 
 	cout << endl;
-	cout<< endl;
+	cout << endl;
 	cout << "ERROR INICIANDO SESION, VOLVIENDO A LA PAGINA DE INICIO" << endl;
 	inicio(s);
 
 }
 
-void menuPrincipal(SOCKET *s, Usuario u){
+void menuPrincipal(SOCKET *s, Usuario u) {
 	system("cls");
 	cout << u.getDNI() << endl;
-			cout << u.getNombre() << endl;
-			cout << u.getApellido() << endl;
-			cout << u.getEmail() << endl;
-			cout << u.getTlf() << endl;
-			cout << u.getUser() << endl;
-			cout << u.getContra() << endl;
-			cout << u.getGenero() << endl;
-			cout << u.getFechaNcto() << endl;
-			cout << u.getNumTarjeta() << endl;
-			cout << u.getPuntos() << endl;
+	cout << u.getNombre() << endl;
+	cout << u.getApellido() << endl;
+	cout << u.getEmail() << endl;
+	cout << u.getTlf() << endl;
+	cout << u.getUser() << endl;
+	cout << u.getContra() << endl;
+	cout << u.getGenero() << endl;
+	cout << u.getFechaNcto() << endl;
+	cout << u.getNumTarjeta() << endl;
+	cout << u.getPuntos() << endl;
 	int opcion;
 	cout << "BIENVENIDO AL MENU PRINCIPAL" << endl;
 	cout << "=======================================" << endl;
@@ -133,50 +137,55 @@ void menuPrincipal(SOCKET *s, Usuario u){
 	cout << "3. Salir" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
-	cin>>opcion;
+	cin >> opcion;
 
-	switch(opcion){
-	case 1: estatPeliculas(s, u);
-			break;
-	case 2: menuOfertasPuntos(s, u);
-			break;
-	case 3: break;
-	default: break;;
+	switch (opcion) {
+	case 1:
+		estatPeliculas(s, u);
+		break;
+	case 2:
+		menuOfertasPuntos(s, u);
+		break;
+	case 3:
+		break;
+	default:
+		break;
+		;
 	}
 }
 
-void estatPeliculas(SOCKET *s, Usuario u){
+void estatPeliculas(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "ESTADISTICAS PELICULAS" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
-	cout << "1. Peliculas mas alquiladas" << endl;
-	cout << "2. Top por genero" << endl;
-	cout << "3. Volver" << endl;
+	cout << "1. Top por genero" << endl;
+	cout << "2. Volver" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
 	int opcion;
-	cin>>opcion;
+	cin >> opcion;
 
-	switch(opcion){
-	case 1: pelisMasAlquiladas(s, u);
+	switch (opcion) {
+	case 1:	topGeneros(s, u);
+		break;
+	case 2: menuPrincipal(s,u);
 			break;
-	case 2: topGeneros(s, u);
-			break;
-	case 3:	break;
-	default: break;
+	default:
+		break;
 	}
 }
 
-void topGeneros(SOCKET *s, Usuario u){
+void topGeneros(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "GENEROS" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
-	cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion" << endl
-			<< "4. Clasicas" << endl << "5. Comedia" << endl << "6. Terror" << endl << "7. Romanticas" << endl << endl;
+	cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion"
+			<< endl << "4. Clasicas" << endl << "5. Comedia" << endl
+			<< "6. Terror" << endl << "7. Romanticas" << endl << endl;
 
 	int opcion;
 	cout << "Introduce una opcion: ";
@@ -184,7 +193,7 @@ void topGeneros(SOCKET *s, Usuario u){
 
 	//SACAD LAS PELICULAS DEL FICHERO
 
-	switch(opcion){
+	switch (opcion) {
 	case 1: //SACAR EL TOP DE ACCION
 	case 2: //SACAR EL TOP DE DRAMA
 	case 3: //SACAR EL TOP DE CIENCIA FICCION
@@ -192,31 +201,15 @@ void topGeneros(SOCKET *s, Usuario u){
 	case 5: //SACAR EL TOP DE COMEDIA
 	case 6: //SACAR EL TOP DE TERROR
 	case 7: //SACAR EL TOP DE ROMANTICAS
-	default: break;
+	default:
+		break;
 	}
 }
 
-void pelisMasAlquiladas(SOCKET *s, Usuario u){
+void datosPelicula(SOCKET *s, char *nombrePeli, Usuario u) {
 	cout << endl;
 	cout << endl;
-	cout << "PELICULAS MAS ALQUILADAS" << endl;
-	cout << "=======================================" << endl;
-	cout << endl;
-
-	//SACAR LAS PELICULAS MAS ALQUILADAS
-
-
-	//HACER QUE INTRODUZCA EL NOMBRE DE LA PELICULA DE LA QUE SE DESEA VER LOS DATOS
-	char nombrePeli[40];
-	cout<< "Introduce el titulo de la pelicula: ";
-	cin >> nombrePeli;
-	datosPelicula(s, nombrePeli, u);
-}
-
-void datosPelicula(SOCKET *s, char* nombrePeli, Usuario u){
-	cout << endl;
-	cout << endl;
-	cout << "PELICULA: " << nombrePeli <<  endl;
+	cout << "PELICULA: " << nombrePeli << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
 	//SACAR ESTOS DATOS DEL FICHERO DE PELICULAS
@@ -230,12 +223,12 @@ void datosPelicula(SOCKET *s, char* nombrePeli, Usuario u){
 	cout << "(Q para salir)";
 	cin >> q;
 
-	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
+	if ((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
 		menuPrincipal(s, u);
 	}
 }
 
-void menuOfertasPuntos(SOCKET *s, Usuario u){
+void menuOfertasPuntos(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "MENU PUNTOS Y OFERTAS " << endl;
@@ -250,31 +243,35 @@ void menuOfertasPuntos(SOCKET *s, Usuario u){
 	int opcion = 0;
 	cin >> opcion;
 
-	switch(opcion){
-	case 1: menuOfertas(s, u);
-			break;
-	case 2: menuPuntos(s, u);
-			break;
-	case 3: menuPrincipal(s, u);
-			break;
-	default: break;
+	switch (opcion) {
+	case 1:
+		menuOfertas(s, u);
+		break;
+	case 2:
+		menuPuntos(s, u);
+		break;
+	case 3:
+		menuPrincipal(s, u);
+		break;
+	default:
+		break;
 	}
 }
 
-void menuPuntos(SOCKET *s, Usuario u){
+void menuPuntos(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "TUS PELICULAS ALQUILADAS" << endl;
 	cout << "=======================================" << endl;
 
 	/*SACAR UNA LISTA DE LAS PELICULAS ALQUILADAS POR EL USUARIO.
-		ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
-		AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
+	 ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
+	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
 
-	Peliculas peliculas = comandoGetAlquileres(s,u);
+	Peliculas peliculas = comandoGetAlquileres(s, u);
 
 	for (int i = 0; i < peliculas.getNumPeliculas(); ++i) {
-		cout << i << ". " <<  peliculas.getNombre(i) << endl;
+		cout << i << ". " << peliculas.getNombre(i) << endl;
 	}
 
 	cout << endl;
@@ -289,12 +286,12 @@ void menuPuntos(SOCKET *s, Usuario u){
 	cout << "(Q para volver)";
 	cin >> q;
 
-	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
+	if ((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
 		menuOfertasPuntos(s, u);
 	}
 }
 
-void menuOfertas(SOCKET *s, Usuario u){
+void menuOfertas(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "OFERTAS POR PUNTOS" << endl;
@@ -309,18 +306,22 @@ void menuOfertas(SOCKET *s, Usuario u){
 	int opcion;
 	cin >> opcion;
 
-	switch(opcion){
-	case 1: ofertasRefrescos(s, u);
-			break;
-	case 2: ofertasSnacks(s, u);
-			break;
-	case 3: menuOfertasPuntos(s, u);
-			break;
-	default: break;
+	switch (opcion) {
+	case 1:
+		ofertasRefrescos(s, u);
+		break;
+	case 2:
+		ofertasSnacks(s, u);
+		break;
+	case 3:
+		menuOfertasPuntos(s, u);
+		break;
+	default:
+		break;
 	}
 }
 
-void ofertasSnacks(SOCKET *s, Usuario u){
+void ofertasSnacks(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "SNACKS" << endl;
@@ -339,19 +340,20 @@ void ofertasSnacks(SOCKET *s, Usuario u){
 	/*ACCEDER A LA BASE DE DATOS Y QUITARLE LOS PUNTOS PROPORCIONALES A LA OPCION ELEGIDA AL USUARIO
 	 * PRINTEAR POR EJEMPLO "DORITOS CANJEADOS POR 30 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS
 	 */
-	switch(opcion){
+	switch (opcion) {
 	case 1:
 	case 2:
 	case 3:
 	case 4:
-	case 5: menuOfertas(s, u);
-			break;
-	default: break;
+	case 5:
+		menuOfertas(s, u);
+		break;
+	default:
+		break;
 	}
 }
 
-
-void ofertasRefrescos(SOCKET *s, Usuario u){
+void ofertasRefrescos(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "REFRESCOS" << endl;
@@ -370,13 +372,15 @@ void ofertasRefrescos(SOCKET *s, Usuario u){
 	/*ACCEDER A LA BASE DE DATOS Y QUITARLE LOS PUNTOS PROPORCIONALES A LA OPCION ELEGIDA AL USUARIO
 	 * PRINTEAR POR EJEMPLO "SPRITE CANJEADO POR 20 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS
 	 */
-	switch(opcion){
+	switch (opcion) {
 	case 1:
 	case 2:
 	case 3:
 	case 4:
-	case 5: menuOfertas(s, u);
-			break;
-	default: break;
+	case 5:
+		menuOfertas(s, u);
+		break;
+	default:
+		break;
 	}
 }
