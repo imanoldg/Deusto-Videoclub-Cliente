@@ -51,6 +51,7 @@ int SocketInit(SOCKET* s){
 int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u){
 	char sendBuff[512], recvBuff[512];
 
+	cout << "Comando enviado" << endl;
 	strcpy(sendBuff, "SESION_INIT");
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 	strcpy(sendBuff, usuario);
@@ -121,4 +122,8 @@ Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
 	}
 
 	return p;
+}
+
+void comandoCambiarPuntos(){
+
 }

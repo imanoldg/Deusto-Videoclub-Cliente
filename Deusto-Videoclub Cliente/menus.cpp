@@ -45,14 +45,14 @@ void recuperarContra(SOCKET* s){
 	cout << "=======================================" << endl;
 	cout << endl;
 	cout << "Introducir DNI: ";
-	char* dni;
+	char dni[10];
 	cin >> dni;
 	cout << endl;
 	cout << "Introducir contraseña nueva: ";
-	char* contrasenha;
+	char contrasenha[16];
 	cin >> contrasenha;
 
-	char* q;
+	char q[2];
 	cout << "(Q para volver)";
 	cin >> q;
 
@@ -67,21 +67,30 @@ void recuperarContra(SOCKET* s){
 }
 
 void inicioSesion(SOCKET* s){
-	char* usuario;
-	char* contrasenha;
+	char usuario[40];
+	char contrasenha[16];
 
 	cout << endl;
 	cout << endl;
 	cout << "Introduce tu usuario: ";
 	cin >> usuario;
 	cout << endl;
+	cout << usuario << endl;
 	cout << "Introduce tu contraseña: ";
 	cin >> contrasenha;
+	cout << contrasenha << endl;
+	cout << "Enviando comando" << endl;
+	cout << "Enviando comando" << endl;
+	cout << "Enviando comando" << endl;
+	cout << "Enviando comando" << endl;
+
 
 	//Se crea el usuario con parametros vacios y se pasa como referencia al metodo de socket
 	Usuario u;
+	cout << "Enviando comando" << endl;
 	int correcto = comandoIniciarSesion(s, usuario, contrasenha, u);
-	Sleep(3000);
+
+	cout << u.getEmail() << endl;
 
 	if(correcto == 1){
 		cout << endl;
