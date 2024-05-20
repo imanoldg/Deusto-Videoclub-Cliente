@@ -50,8 +50,8 @@ int SocketInit(SOCKET* s){
 
 int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u){
 	char sendBuff[512], recvBuff[512];
+	int resultado = 0;
 
-	cout << "Comando enviado" << endl;
 	strcpy(sendBuff, "SESION_INIT");
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 	strcpy(sendBuff, usuario);
@@ -62,30 +62,41 @@ int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setDNI(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setNombre(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setApellido(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setEmail(recvBuff);
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	u.setTlf(atoi(recvBuff));
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setUser(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setContra(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setGenero(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setFechaNcto(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setNumTarjeta(atoi(recvBuff));
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setPuntos(atoi(recvBuff));
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
-
+	resultado = atoi(recvBuff);
 
 	return atoi(recvBuff);
-
 }
 
 void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){

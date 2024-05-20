@@ -32,9 +32,11 @@ void inicio(SOCKET* s){
 
 	switch(opcion){
 	case 1: inicioSesion(s);
+			//break;
 	case 2: recuperarContra(s);
-	case 3:
-	default: NULL;
+			//break;
+	case 3:	break;
+	default: break;
 	}
 }
 
@@ -52,13 +54,14 @@ void recuperarContra(SOCKET* s){
 	char contrasenha[16];
 	cin >> contrasenha;
 
+
+	//BUSCAR EL DNI DE LA PERSONA EN LA BASE DE DATOS Y ESTABLECER LA CONTRASEÑA INTRODUCIDA
+	comandoPassChange(s, dni, contrasenha);
+
 	char q[2];
 	cout << "(Q para volver)";
 	cin >> q;
 
-
-	//BUSCAR EL DNI DE LA PERSONA EN LA BASE DE DATOS Y ESTABLECER LA CONTRASEÑA INTRODUCIDA
-	comandoPassChange(s, dni, contrasenha);
 
 	if((strcmp(q, "q") == 0) || (strcmp(q, "Q") == 0)) {
 		inicio(s);
@@ -75,34 +78,27 @@ void inicioSesion(SOCKET* s){
 	cout << "Introduce tu usuario: ";
 	cin >> usuario;
 	cout << endl;
-	cout << usuario << endl;
 	cout << "Introduce tu contraseña: ";
 	cin >> contrasenha;
-	cout << contrasenha << endl;
-	cout << "Enviando comando" << endl;
-	cout << "Enviando comando" << endl;
-	cout << "Enviando comando" << endl;
-	cout << "Enviando comando" << endl;
-
 
 	//Se crea el usuario con parametros vacios y se pasa como referencia al metodo de socket
 	Usuario u;
-	cout << "Enviando comando" << endl;
 	int correcto = comandoIniciarSesion(s, usuario, contrasenha, u);
-
-	cout << u.getEmail() << endl;
 
 	if(correcto == 1){
 		cout << endl;
 		cout<< endl;
 		cout << "USUARIO Y CONTRASEÑA CORRECTOS, INICIANDO SESION" << endl;
+		Sleep(1000);
 
 		menuPrincipal(s, u);
 	} else{
 		cout << endl;
 		cout<< endl;
-		cout << "ERROR INICIANDO SESION, VOLVIENDO A LA PAGINA DE INICIO";
+		cout << "ERROR INICIANDO SESION, VOLVIENDO A LA PAGINA DE INICIO" << endl;
 		inicio(s);
+
+		cout << endl;
 	}
 
 
@@ -119,7 +115,7 @@ void menuPrincipal(SOCKET *s, Usuario u){
 	cout << "3. Salir" << endl;
 	cout << endl;
 	cout << "Introducir opcion: ";
-	int opcion;
+	int opcion = 0;
 	cin>>opcion;
 
 	switch(opcion){
@@ -151,7 +147,7 @@ void estatPeliculas(SOCKET *s, Usuario u){
 			break;
 	case 2: topGeneros(s, u);
 			break;
-			break;
+	case 3:	break;
 	default: break;
 	}
 }
@@ -194,7 +190,7 @@ void pelisMasAlquiladas(SOCKET *s, Usuario u){
 
 
 	//HACER QUE INTRODUZCA EL NOMBRE DE LA PELICULA DE LA QUE SE DESEA VER LOS DATOS
-	char* nombrePeli;
+	char nombrePeli[40];
 	cout<< "Introduce el titulo de la pelicula: ";
 	cin >> nombrePeli;
 	datosPelicula(s, nombrePeli, u);
@@ -213,7 +209,7 @@ void datosPelicula(SOCKET *s, char* nombrePeli, Usuario u){
 	cout << "Sinopsis: " << endl;
 	cout << endl;
 
-	char* q;
+	char q[2];
 	cout << "(Q para salir)";
 	cin >> q;
 
@@ -234,7 +230,7 @@ void menuOfertasPuntos(SOCKET *s, Usuario u){
 	cout << endl;
 	cout << "Introducir opcion: ";
 
-	int opcion;
+	int opcion = 0;
 	cin >> opcion;
 
 	switch(opcion){
@@ -258,15 +254,21 @@ void menuPuntos(SOCKET *s, Usuario u){
 		ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
 		AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
 
+	Peliculas peliculas = comandoGetAlquileres(s,u);
+
+	for (int i = 0; i < peliculas.getNumPeliculas(); ++i) {
+		cout << i << ". " <<  peliculas.getNombre(i) << endl;
+	}
+
 	cout << endl;
 	cout << "=======================================" << endl;
 	cout << "SISTEMA DE PUNTUAJE" << endl;
 	cout << "=======================================" << endl;
-	cout << "- 3 dias: 3 puntos";
-	cout << "- 5 dias: 5 puntos";
-	cout << "- 7 dias: 7 puntos";
+	cout << "- 3 dias: 3 puntos" << endl;
+	cout << "- 5 dias: 5 puntos" << endl;
+	cout << "- 7 dias: 7 puntos" << endl;
 
-	char* q;
+	char q[2];
 	cout << "(Q para volver)";
 	cin >> q;
 
