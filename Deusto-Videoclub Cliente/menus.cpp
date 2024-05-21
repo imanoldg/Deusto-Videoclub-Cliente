@@ -318,7 +318,7 @@ void menuPuntos(SOCKET *s, Usuario u) {
 
 	/*SACAR UNA LISTA DE LAS PELICULAS ALQUILADAS POR EL USUARIO.
 	 ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
-	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
+	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO */
 
 	int numPeliculas = comandoGetNumAlquileres(s, u);
 	Pelicula *p = new Pelicula();
@@ -472,7 +472,7 @@ void ofertasRefrescos(SOCKET *s, Usuario u) {
 	cout << "=======================================" << endl;
 	cout << "1. Sprite (20 puntos)" << endl;
 	cout << "2. Kas (15 puntos)" << endl;
-	cout << "3. Coca cola(35 puntos)" << endl;
+	cout << "3. CocaCola(35 puntos)" << endl;
 	cout << "4. Monster (40 puntos)" << endl;
 	cout << "5. Volver a las ofertas" << endl;
 	cout << endl;
@@ -482,13 +482,69 @@ void ofertasRefrescos(SOCKET *s, Usuario u) {
 	cin >> opcion;
 
 	/*ACCEDER A LA BASE DE DATOS Y QUITARLE LOS PUNTOS PROPORCIONALES A LA OPCION ELEGIDA AL USUARIO
-	 * PRINTEAR POR EJEMPLO "SPRITE CANJEADO POR 20 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS
+	 * PRINTEAR POR EJEMPLO "SPRITE CANJEADO POR 20 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS   --------- MIKEL
 	 */
 	switch (opcion) {
 	case 1:
+		if (u.getPuntos() < 20) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 20);
+			u.setPuntos(u.getPuntos() - 20);
+			cout << "Sprite canjeado por 20 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 2:
+		if (u.getPuntos() < 15) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 15);
+			u.setPuntos(u.getPuntos() - 15);
+			cout << "Kas canjeado por 15 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 3:
+		if (u.getPuntos() < 35) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 35);
+			u.setPuntos(u.getPuntos() - 35);
+			cout << "CocaCola canjeada por 35 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 4:
+		if (u.getPuntos() < 40) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 40);
+			u.setPuntos(u.getPuntos() - 40);
+			cout << "Monster canjeada por 40 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 5:
 		menuOfertas(s, u);
 		break;
