@@ -410,11 +410,11 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 30);
 			u.setPuntos(u.getPuntos() - 30);
+			cout << "Doritos canjeados por 30 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
 		}
-
 	case 2:
 		if (u.getPuntos() < 25) {
 			cout << "No tienes puntos suficientes" << endl;;
@@ -425,6 +425,7 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 25);
 			u.setPuntos(u.getPuntos() - 25);
+			cout << "Patatas fritas canjeadas por 25 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
@@ -439,6 +440,7 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 32);
 			u.setPuntos(u.getPuntos() - 32);
+			cout << "Cheetos Pandilla canjeados por 32 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
@@ -453,6 +455,7 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 40);
 			u.setPuntos(u.getPuntos() - 40);
+			cout << "Pelotazos canjeados por 40 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
