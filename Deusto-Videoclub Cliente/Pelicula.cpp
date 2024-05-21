@@ -11,20 +11,18 @@
 using namespace std;
 
 Pelicula::Pelicula(){
-	this->pelicula = NULL;
+	strcpy(this->pelicula, "nombrePeli");
 }
 
 Pelicula::Pelicula(char* pelicula){
-	this->pelicula = new char[strlen(pelicula)];
 	strcpy(this->pelicula, pelicula);
 }
 
 Pelicula::~Pelicula(){
-	delete[] this->pelicula;
+
 }
 
 void Pelicula::setNombre(char* nombre){
-	this->pelicula = new char[strlen(nombre) + 1];
 	strcpy(this->pelicula, nombre);
 }
 

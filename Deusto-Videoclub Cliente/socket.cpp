@@ -112,7 +112,7 @@ void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
 	cout << recvBuff << endl;
 }
 
-listaPelis comandoGetAlquileres(SOCKET* s, Usuario &u){
+void comandoGetAlquileres(SOCKET* s, Usuario &u, listaPelis &lP){
 	char sendBuff[512], recvBuff[512];
 
 	strcpy(sendBuff, "GET_ALQUILERES");
@@ -120,11 +120,8 @@ listaPelis comandoGetAlquileres(SOCKET* s, Usuario &u){
 	strcpy(sendBuff, u.getDNI());
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 
-	listaPelis lP;
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
-
-
 	lP.setNumPeliculas(atoi(recvBuff));
 
 	for (int i = 0; i < lP.getNumPeliculas(); ++i) {
@@ -132,7 +129,20 @@ listaPelis comandoGetAlquileres(SOCKET* s, Usuario &u){
 		lP.pelis[i].setNombre(recvBuff);
 	}
 
-	return lP;
+}
+
+int comandoGetNumAlquileres(SOCKET* s, Usuario &u){
+	char sendBuff[512], recvBuff[512];
+
+	strcpy(sendBuff, "GET_NUM_ALQUILERES");
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+	strcpy(sendBuff, u.getDNI());
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	return atoi(recvBuff);
+
 }
 
 void comandoCambiarPuntos(){

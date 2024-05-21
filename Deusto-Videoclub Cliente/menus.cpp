@@ -257,12 +257,19 @@ void menuPuntos(SOCKET *s, Usuario u) {
 	 ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
 	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
 
-	listaPelis peliculas = comandoGetAlquileres(s, u);
+	int numPeliculas = comandoGetNumAlquileres(s, u);
+	Pelicula* p = new Pelicula();
+
+	listaPelis peliculas(p, numPeliculas);
+
+	comandoGetAlquileres(s, u, peliculas);
 
 
 	for (int i = 0; i < peliculas.getNumPeliculas(); ++i) {
 		cout << i << ". " << peliculas.pelis[i].getNombre() << endl;
 	}
+
+	cout << endl << endl << "TOTAL PUNTOS: " << u.getPuntos() << endl << endl;
 
 	cout << endl;
 	cout << "=======================================" << endl;

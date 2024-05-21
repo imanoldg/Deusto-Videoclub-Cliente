@@ -18,5 +18,6 @@
 int SocketInit(SOCKET* s);
 int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasena, Usuario &u);
 void comandoPassChange(SOCKET* s, char* dni, char* contrasenha);
-listaPelis comandoGetAlquileres(SOCKET* s, Usuario &u);
+int comandoGetNumAlquileres(SOCKET *s, Usuario &u);
+void comandoGetAlquileres(SOCKET* s, Usuario &u, listaPelis &p);
 #endif /* SOCKET_H_ */

@@ -10,7 +10,7 @@
 
 class Pelicula{
 private:
-	char* pelicula;
+	char pelicula[500];
 public:
 	Pelicula();
 	Pelicula(char* peli);
