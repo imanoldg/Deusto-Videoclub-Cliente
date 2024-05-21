@@ -145,6 +145,19 @@ int comandoGetNumAlquileres(SOCKET* s, Usuario &u){
 
 }
 
-void comandoCambiarPuntos(){
+void comandoCambiarPuntos(SOCKET *s, Usuario &u, int numPuntos){
+	char sendBuff[512], recvBuff[512], numPuntosArray[3];
 
+	strcpy(sendBuff, "UPDATE_PUNTOS");
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	strcpy(sendBuff, u.getDNI());
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	itoa(numPuntos, numPuntosArray, 10);
+	strcpy(sendBuff, numPuntosArray);
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	cout << recvBuff << endl;
 }

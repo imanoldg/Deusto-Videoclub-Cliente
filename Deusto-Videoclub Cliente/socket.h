@@ -20,4 +20,5 @@ int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasena, Usuario &u)
 void comandoPassChange(SOCKET* s, char* dni, char* contrasenha);
 int comandoGetNumAlquileres(SOCKET *s, Usuario &u);
 void comandoGetAlquileres(SOCKET* s, Usuario &u, listaPelis &p);
+void comandoCambiarPuntos(SOCKET *s, Usuario &u, int numPuntos);
 #endif /* SOCKET_H_ */

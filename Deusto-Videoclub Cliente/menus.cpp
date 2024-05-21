@@ -157,10 +157,12 @@ void estatPeliculas(SOCKET *s, Usuario u) {
 	cin >> opcion;
 
 	switch (opcion) {
-	case 1:	topGeneros(s, u);
+	case 1:
+		topGeneros(s, u);
 		break;
-	case 2: menuPrincipal(s,u);
-			break;
+	case 2:
+		menuPrincipal(s, u);
+		break;
 	default:
 		break;
 	}
@@ -258,12 +260,11 @@ void menuPuntos(SOCKET *s, Usuario u) {
 	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
 
 	int numPeliculas = comandoGetNumAlquileres(s, u);
-	Pelicula* p = new Pelicula();
+	Pelicula *p = new Pelicula();
 
 	listaPelis peliculas(p, numPeliculas);
 
 	comandoGetAlquileres(s, u, peliculas);
-
 
 	for (int i = 0; i < peliculas.getNumPeliculas(); ++i) {
 		cout << i << ". " << peliculas.pelis[i].getNombre() << endl;
@@ -339,9 +340,62 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 	 */
 	switch (opcion) {
 	case 1:
+		if (u.getPuntos() < 30) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 30);
+			u.setPuntos(u.getPuntos() - 30);
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
+
 	case 2:
+		if (u.getPuntos() < 25) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 25);
+			u.setPuntos(u.getPuntos() - 25);
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 3:
+		if (u.getPuntos() < 32) {
+			cout << "No tienes puntos suficientes" << endl;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 32);
+			u.setPuntos(u.getPuntos() - 32);
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 4:
+		if (u.getPuntos() < 40) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 40);
+			u.setPuntos(u.getPuntos() - 40);
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 5:
 		menuOfertas(s, u);
 		break;
