@@ -11,6 +11,11 @@
 #include <iostream>
 #include <windows.h>
 #include <winsock2.h>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+#include <sstream>
+#include <cstring>
 
 #include "Pelicula.h"
 using namespace std;
@@ -168,33 +173,89 @@ void estatPeliculas(SOCKET *s, Usuario u) {
 	}
 }
 
+std::vector<PeliculaNota> leerPeliculas() {
+    std::vector<PeliculaNota> peliculas;
+    std::ifstream archivo("peliculas.csv");
+    if (!archivo.is_open()) {
+        std::cerr << "No se pudo abrir el archivo de peliculas." << std::endl;
+        return peliculas;
+    }
+
+    std::string linea;
+    while (std::getline(archivo, linea)) {
+        std::stringstream ss(linea);
+        std::string titulo, duracion_str, nota_str, genero, descripcion;
+        if (std::getline(ss, titulo, ';') &&
+            std::getline(ss, duracion_str, ';') &&
+            std::getline(ss, nota_str, ';') &&
+            std::getline(ss, genero, ';') &&
+            std::getline(ss, descripcion)) {
+
+            int duracion = std::stoi(duracion_str);
+            float nota = std::stof(nota_str);
+            peliculas.emplace_back(titulo.c_str(), duracion, nota, genero.c_str(), descripcion.c_str());
+        }
+    }
+
+    return peliculas;
+}
+
 void topGeneros(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "GENEROS" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
-	cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion"
+	std::cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion"
 			<< endl << "4. Clasicas" << endl << "5. Comedia" << endl
-			<< "6. Terror" << endl << "7. Romanticas" << endl << endl;
+			<< "6. Terror" << endl << "7. Romanticas" << endl << std::endl;
 
 	int opcion;
 	cout << "Introduce una opcion: ";
 	cin >> opcion;
 
+	std::vector<PeliculaNota> peliculas = leerPeliculas();
+    std::vector<PeliculaNota> filtradas;
+    const char* genero = nullptr;
+
 	//SACAD LAS PELICULAS DEL FICHERO
+	
 
 	switch (opcion) {
-	case 1: //SACAR EL TOP DE ACCION
-	case 2: //SACAR EL TOP DE DRAMA
-	case 3: //SACAR EL TOP DE CIENCIA FICCION
-	case 4: //SACAR EL TOP DE CLASICAS
-	case 5: //SACAR EL TOP DE COMEDIA
-	case 6: //SACAR EL TOP DE TERROR
-	case 7: //SACAR EL TOP DE ROMANTICAS
+	case 1: 
+		genero = "Accion"; break;
+    case 2: 
+		genero = "Drama"; break;
+    case 3: 
+		genero = "Ciencia Ficcion"; break;
+    case 4: 
+		genero = "Clasicas"; break;
+    case 5: 
+		genero = "Comedia"; break;
+    case 6: 
+		genero = "Terror"; break;
+    case 7: 
+		genero = "Romanticas"; break;
 	default:
 		break;
 	}
+
+	for (const auto& pelicula : peliculas) {
+        if (std::strcmp(pelicula.getGenero(), genero) == 0) {
+            filtradas.push_back(pelicula);
+        }
+    }
+
+	std::sort(filtradas.begin(), filtradas.end(), [](const PeliculaNota& a, const PeliculaNota& b) {
+        return a.getNota() > b.getNota();
+    });
+
+	std::cout << "Top peliculas de " << genero << ":" << std::endl;
+    for (const auto& pelicula : filtradas) {
+        std::cout << pelicula.getTitulo() << " - Nota: " << pelicula.getNota() << std::endl;
+        std::cout << "Duración: " << pelicula.getDuracion() << " minutos" << std::endl;
+        std::cout << "Descripción: " << pelicula.getDescripcion() << std::endl << std::endl;
+    }
 }
 
 void datosPelicula(SOCKET *s, char *nombrePeli, Usuario u) {
