@@ -19,7 +19,7 @@ Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telef
 	strcpy(this->user, user);
 	strcpy(this->contra, contra);
 	strcpy(this->genero, genero);
-	this->fechaNcto = new char(strlen(fechaNcto) + 1);
+	this->fechaNcto = new char[strlen(fechaNcto) + 1];
 	strcpy(this->fechaNcto, fechaNcto);
 	this->numTarjeta = numTarjeta;
 	this->puntos = puntos;
@@ -34,7 +34,7 @@ Usuario::Usuario(){
 	strcpy(this->user, "");
 	strcpy(this->contra, "");
 	strcpy(this->genero, "");
-	this->fechaNcto = new char(strlen("") + 1);
+	this->fechaNcto = new char[strlen("") + 1];
 	strcpy(this->fechaNcto, "");
 	this->numTarjeta = 0;
 	this->puntos = 0;
@@ -49,7 +49,7 @@ Usuario::Usuario(Usuario &otro){
 	strcpy(this->user, otro.user);
 	strcpy(this->contra, otro.contra);
 	strcpy(this->genero, otro.genero);
-	this->fechaNcto = new char(strlen(otro.fechaNcto) + 1);
+	this->fechaNcto = new char[strlen(otro.fechaNcto) + 1];
 	strcpy(this->fechaNcto, otro.fechaNcto);
 	this->numTarjeta = otro.numTarjeta;
 	this->puntos = otro.puntos;
@@ -125,7 +125,7 @@ void Usuario::setEmail(char* email){
 }
 
 void Usuario::setFechaNcto(char* fecha){
-	this->fechaNcto = new char(strlen(fecha) + 1);
+	this->fechaNcto = new char[strlen(fecha) + 1];
 	strcpy(this->fechaNcto, fecha);
 }
 
