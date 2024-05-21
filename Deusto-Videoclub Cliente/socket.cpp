@@ -9,7 +9,7 @@
 #include <winsock2.h>
 #include <iostream>
 
-#include "Peliculas.h"
+#include "Pelicula.h"
 using namespace std;
 
 int SocketInit(SOCKET* s){
@@ -50,7 +50,6 @@ int SocketInit(SOCKET* s){
 
 int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u){
 	char sendBuff[512], recvBuff[512];
-	int resultado = 0;
 
 	strcpy(sendBuff, "SESION_INIT");
 	send(*s, sendBuff, sizeof(sendBuff), 0);
@@ -94,7 +93,6 @@ int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u
 	u.setPuntos(atoi(recvBuff));
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
-	resultado = atoi(recvBuff);
 
 	return atoi(recvBuff);
 }
@@ -114,7 +112,7 @@ void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
 	cout << recvBuff << endl;
 }
 
-Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
+listaPelis comandoGetAlquileres(SOCKET* s, Usuario &u){
 	char sendBuff[512], recvBuff[512];
 
 	strcpy(sendBuff, "GET_ALQUILERES");
@@ -122,17 +120,19 @@ Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
 	strcpy(sendBuff, u.getDNI());
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 
-	Peliculas p;
+	listaPelis lP;
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
-	p.setNumPeliculas(atoi(recvBuff));
 
-	for (int i = 0; i < p.getNumPeliculas() - 1; ++i) {
+
+	lP.setNumPeliculas(atoi(recvBuff));
+
+	for (int i = 0; i < lP.getNumPeliculas(); ++i) {
 		recv(*s, recvBuff, sizeof(recvBuff), 0);
-		p.setNombre(recvBuff, i);
+		lP.pelis[i].setNombre(recvBuff);
 	}
 
-	return p;
+	return lP;
 }
 
 void comandoCambiarPuntos(){

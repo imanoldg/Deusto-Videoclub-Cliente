@@ -12,7 +12,7 @@
 #include <windows.h>
 #include <winsock2.h>
 
-#include "Peliculas.h"
+#include "Pelicula.h"
 using namespace std;
 
 void inicio(SOCKET *s) {
@@ -117,17 +117,6 @@ void inicioSesion(SOCKET *s) {
 
 void menuPrincipal(SOCKET *s, Usuario u) {
 	system("cls");
-	cout << u.getDNI() << endl;
-	cout << u.getNombre() << endl;
-	cout << u.getApellido() << endl;
-	cout << u.getEmail() << endl;
-	cout << u.getTlf() << endl;
-	cout << u.getUser() << endl;
-	cout << u.getContra() << endl;
-	cout << u.getGenero() << endl;
-	cout << u.getFechaNcto() << endl;
-	cout << u.getNumTarjeta() << endl;
-	cout << u.getPuntos() << endl;
 	int opcion;
 	cout << "BIENVENIDO AL MENU PRINCIPAL" << endl;
 	cout << "=======================================" << endl;
@@ -268,10 +257,11 @@ void menuPuntos(SOCKET *s, Usuario u) {
 	 ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
 	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
 
-	Peliculas peliculas = comandoGetAlquileres(s, u);
+	listaPelis peliculas = comandoGetAlquileres(s, u);
+
 
 	for (int i = 0; i < peliculas.getNumPeliculas(); ++i) {
-		cout << i << ". " << peliculas.getNombre(i) << endl;
+		cout << i << ". " << peliculas.pelis[i].getNombre() << endl;
 	}
 
 	cout << endl;
