@@ -38,10 +38,10 @@ void inicio(SOCKET *s) {
 	switch (opcion) {
 	case 1:
 		inicioSesion(s);
-		//break;
+		break;
 	case 2:
 		recuperarContra(s);
-		//break;
+		break;
 	case 3:
 		break;
 	default:
@@ -115,7 +115,7 @@ void inicioSesion(SOCKET *s) {
 
 	cout << endl;
 	cout << endl;
-	cout << "ERROR INICIANDO SESION, VOLVIENDO A LA PAGINA DE INICIO" << endl;
+	cout << "VOLVIENDO A LA PAGINA DE INICIO" << endl;
 	inicio(s);
 
 }
@@ -175,7 +175,7 @@ void estatPeliculas(SOCKET *s, Usuario u) {
 
 std::vector<PeliculaNota> leerPeliculas() {
     std::vector<PeliculaNota> peliculas;
-    std::ifstream archivo("Peliculas.csv");
+    std::ifstream archivo("peliculas.csv");
     if (!archivo.is_open()) {
         std::cerr << "No se pudo abrir el archivo de peliculas." << std::endl;
         return peliculas;
@@ -223,19 +223,19 @@ void topGeneros(SOCKET *s, Usuario u) {
 
 	switch (opcion) {
 	case 1: 
-		genero = "Accion"; break;
+		genero = "Acción"; break;
     case 2: 
 		genero = "Drama"; break;
     case 3: 
-		genero = "Ciencia Ficcion"; break;
+		genero = "Ciencia Ficción"; break;
     case 4: 
-		genero = "Clasicas"; break;
+		genero = "Clásicas"; break;
     case 5: 
 		genero = "Comedia"; break;
     case 6: 
 		genero = "Terror"; break;
     case 7: 
-		genero = "Romanticas"; break;
+		genero = "Románticas"; break;
 	default:
 		break;
 	}
@@ -256,6 +256,20 @@ void topGeneros(SOCKET *s, Usuario u) {
         std::cout << "Duración: " << pelicula.getDuracion() << " minutos" << std::endl;
         std::cout << "Descripción: " << pelicula.getDescripcion() << std::endl << std::endl;
     }
+
+    char opcion2[2];
+
+    cout << "Elije una pelicula para ver sus detalles o pulsa Q para volver atras: " << endl;
+    cin >> opcion2;
+
+	if ((strcmp(opcion2, "q") == 0) || (strcmp(opcion2, "Q") == 0)) {
+		estatPeliculas(s,u);
+	} else if(strcmp(opcion2, "1") == 0){
+
+	}
+
+
+
 }
 
 void datosPelicula(SOCKET *s, char *nombrePeli, Usuario u) {
