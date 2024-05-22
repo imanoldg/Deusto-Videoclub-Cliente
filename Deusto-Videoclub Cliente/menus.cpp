@@ -11,6 +11,11 @@
 #include <iostream>
 #include <windows.h>
 #include <winsock2.h>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+#include <sstream>
+#include <cstring>
 
 #include "Pelicula.h"
 using namespace std;
@@ -168,33 +173,89 @@ void estatPeliculas(SOCKET *s, Usuario u) {
 	}
 }
 
+std::vector<PeliculaNota> leerPeliculas() {
+    std::vector<PeliculaNota> peliculas;
+    std::ifstream archivo("peliculas.csv");
+    if (!archivo.is_open()) {
+        std::cerr << "No se pudo abrir el archivo de peliculas." << std::endl;
+        return peliculas;
+    }
+
+    std::string linea;
+    while (std::getline(archivo, linea)) {
+        std::stringstream ss(linea);
+        std::string titulo, duracion_str, nota_str, genero, descripcion;
+        if (std::getline(ss, titulo, ';') &&
+            std::getline(ss, duracion_str, ';') &&
+            std::getline(ss, nota_str, ';') &&
+            std::getline(ss, genero, ';') &&
+            std::getline(ss, descripcion)) {
+
+            int duracion = std::stoi(duracion_str);
+            float nota = std::stof(nota_str);
+            peliculas.emplace_back(titulo.c_str(), duracion, nota, genero.c_str(), descripcion.c_str());
+        }
+    }
+
+    return peliculas;
+}
+
 void topGeneros(SOCKET *s, Usuario u) {
 	cout << endl;
 	cout << endl;
 	cout << "GENEROS" << endl;
 	cout << "=======================================" << endl;
 	cout << endl;
-	cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion"
+	std::cout << "1. Accion" << endl << "2. Drama" << endl << "3. Ciencia Ficcion"
 			<< endl << "4. Clasicas" << endl << "5. Comedia" << endl
-			<< "6. Terror" << endl << "7. Romanticas" << endl << endl;
+			<< "6. Terror" << endl << "7. Romanticas" << endl << std::endl;
 
 	int opcion;
 	cout << "Introduce una opcion: ";
 	cin >> opcion;
 
+	std::vector<PeliculaNota> peliculas = leerPeliculas();
+    std::vector<PeliculaNota> filtradas;
+    const char* genero = nullptr;
+
 	//SACAD LAS PELICULAS DEL FICHERO
+	
 
 	switch (opcion) {
-	case 1: //SACAR EL TOP DE ACCION
-	case 2: //SACAR EL TOP DE DRAMA
-	case 3: //SACAR EL TOP DE CIENCIA FICCION
-	case 4: //SACAR EL TOP DE CLASICAS
-	case 5: //SACAR EL TOP DE COMEDIA
-	case 6: //SACAR EL TOP DE TERROR
-	case 7: //SACAR EL TOP DE ROMANTICAS
+	case 1: 
+		genero = "Accion"; break;
+    case 2: 
+		genero = "Drama"; break;
+    case 3: 
+		genero = "Ciencia Ficcion"; break;
+    case 4: 
+		genero = "Clasicas"; break;
+    case 5: 
+		genero = "Comedia"; break;
+    case 6: 
+		genero = "Terror"; break;
+    case 7: 
+		genero = "Romanticas"; break;
 	default:
 		break;
 	}
+
+	for (const auto& pelicula : peliculas) {
+        if (std::strcmp(pelicula.getGenero(), genero) == 0) {
+            filtradas.push_back(pelicula);
+        }
+    }
+
+	std::sort(filtradas.begin(), filtradas.end(), [](const PeliculaNota& a, const PeliculaNota& b) {
+        return a.getNota() > b.getNota();
+    });
+
+	std::cout << "Top peliculas de " << genero << ":" << std::endl;
+    for (const auto& pelicula : filtradas) {
+        std::cout << pelicula.getTitulo() << " - Nota: " << pelicula.getNota() << std::endl;
+        std::cout << "Duración: " << pelicula.getDuracion() << " minutos" << std::endl;
+        std::cout << "Descripción: " << pelicula.getDescripcion() << std::endl << std::endl;
+    }
 }
 
 void datosPelicula(SOCKET *s, char *nombrePeli, Usuario u) {
@@ -257,7 +318,7 @@ void menuPuntos(SOCKET *s, Usuario u) {
 
 	/*SACAR UNA LISTA DE LAS PELICULAS ALQUILADAS POR EL USUARIO.
 	 ESA LISTA DEBE DE SACARSE DE LA BASE DE DATOS.
-	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO*/
+	 AL FINAL DE LA LISTA DE ALQUILERES SE DEBE DE PONER EL TOTAL DE PUNTOS DEL USUARIO */
 
 	int numPeliculas = comandoGetNumAlquileres(s, u);
 	Pelicula *p = new Pelicula();
@@ -349,11 +410,11 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 30);
 			u.setPuntos(u.getPuntos() - 30);
+			cout << "Doritos canjeados por 30 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
 		}
-
 	case 2:
 		if (u.getPuntos() < 25) {
 			cout << "No tienes puntos suficientes" << endl;;
@@ -364,6 +425,7 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 25);
 			u.setPuntos(u.getPuntos() - 25);
+			cout << "Patatas fritas canjeadas por 25 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
@@ -378,6 +440,7 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 32);
 			u.setPuntos(u.getPuntos() - 32);
+			cout << "Cheetos Pandilla canjeados por 32 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
@@ -392,6 +455,7 @@ void ofertasSnacks(SOCKET *s, Usuario u) {
 		} else {
 			comandoCambiarPuntos(s, u, u.getPuntos() - 40);
 			u.setPuntos(u.getPuntos() - 40);
+			cout << "Pelotazos canjeados por 40 puntos" << endl;;
 			Sleep(3000);
 			menuOfertas(s, u);
 			break;
@@ -411,7 +475,7 @@ void ofertasRefrescos(SOCKET *s, Usuario u) {
 	cout << "=======================================" << endl;
 	cout << "1. Sprite (20 puntos)" << endl;
 	cout << "2. Kas (15 puntos)" << endl;
-	cout << "3. Coca cola(35 puntos)" << endl;
+	cout << "3. CocaCola(35 puntos)" << endl;
 	cout << "4. Monster (40 puntos)" << endl;
 	cout << "5. Volver a las ofertas" << endl;
 	cout << endl;
@@ -421,13 +485,69 @@ void ofertasRefrescos(SOCKET *s, Usuario u) {
 	cin >> opcion;
 
 	/*ACCEDER A LA BASE DE DATOS Y QUITARLE LOS PUNTOS PROPORCIONALES A LA OPCION ELEGIDA AL USUARIO
-	 * PRINTEAR POR EJEMPLO "SPRITE CANJEADO POR 20 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS
+	 * PRINTEAR POR EJEMPLO "SPRITE CANJEADO POR 20 PUNTOS" Y DEVOLVERLE AL MENU DE OFERTAS   --------- MIKEL
 	 */
 	switch (opcion) {
 	case 1:
+		if (u.getPuntos() < 20) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 20);
+			u.setPuntos(u.getPuntos() - 20);
+			cout << "Sprite canjeado por 20 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 2:
+		if (u.getPuntos() < 15) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 15);
+			u.setPuntos(u.getPuntos() - 15);
+			cout << "Kas canjeado por 15 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 3:
+		if (u.getPuntos() < 35) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 35);
+			u.setPuntos(u.getPuntos() - 35);
+			cout << "CocaCola canjeada por 35 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 4:
+		if (u.getPuntos() < 40) {
+			cout << "No tienes puntos suficientes" << endl;;
+			Sleep(4000);
+			system("cls");
+			ofertasSnacks(s, u);
+			break;
+		} else {
+			comandoCambiarPuntos(s, u, u.getPuntos() - 40);
+			u.setPuntos(u.getPuntos() - 40);
+			cout << "Monster canjeada por 40 puntos" << endl;;
+			Sleep(3000);
+			menuOfertas(s, u);
+			break;
+		}
 	case 5:
 		menuOfertas(s, u);
 		break;
