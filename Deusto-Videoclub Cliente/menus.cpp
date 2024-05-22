@@ -175,7 +175,7 @@ void estatPeliculas(SOCKET *s, Usuario u) {
 
 std::vector<PeliculaNota> leerPeliculas() {
     std::vector<PeliculaNota> peliculas;
-    std::ifstream archivo("peliculas.csv");
+    std::ifstream archivo("Peliculas.csv");
     if (!archivo.is_open()) {
         std::cerr << "No se pudo abrir el archivo de peliculas." << std::endl;
         return peliculas;
