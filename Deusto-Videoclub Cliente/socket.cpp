@@ -9,7 +9,7 @@
 #include <winsock2.h>
 #include <iostream>
 
-#include "Peliculas.h"
+#include "Pelicula.h"
 using namespace std;
 
 int SocketInit(SOCKET* s){
@@ -51,7 +51,6 @@ int SocketInit(SOCKET* s){
 int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u){
 	char sendBuff[512], recvBuff[512];
 
-	cout << "Comando enviado" << endl;
 	strcpy(sendBuff, "SESION_INIT");
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 	strcpy(sendBuff, usuario);
@@ -62,30 +61,40 @@ int comandoIniciarSesion(SOCKET* s, char* usuario, char* contrasenha, Usuario &u
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setDNI(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setNombre(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setApellido(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setEmail(recvBuff);
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	u.setTlf(atoi(recvBuff));
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setUser(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setContra(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setGenero(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setFechaNcto(recvBuff);
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setNumTarjeta(atoi(recvBuff));
+
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	u.setPuntos(atoi(recvBuff));
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 
-
 	return atoi(recvBuff);
-
 }
 
 void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
@@ -103,7 +112,7 @@ void comandoPassChange(SOCKET* s, char* dni, char* contrasenha){
 	cout << recvBuff << endl;
 }
 
-Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
+void comandoGetAlquileres(SOCKET* s, Usuario &u, listaPelis &lP){
 	char sendBuff[512], recvBuff[512];
 
 	strcpy(sendBuff, "GET_ALQUILERES");
@@ -111,19 +120,44 @@ Peliculas comandoGetAlquileres(SOCKET* s, Usuario &u){
 	strcpy(sendBuff, u.getDNI());
 	send(*s, sendBuff, sizeof(sendBuff), 0);
 
-	Peliculas p;
 
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
-	p.setNumPeliculas(atoi(recvBuff));
+	lP.setNumPeliculas(atoi(recvBuff));
 
-	for (int i = 0; i < p.getNumPeliculas() - 1; ++i) {
+	for (int i = 0; i < lP.getNumPeliculas(); ++i) {
 		recv(*s, recvBuff, sizeof(recvBuff), 0);
-		p.setNombre(recvBuff, i);
+		lP.pelis[i].setNombre(recvBuff);
 	}
 
-	return p;
 }
 
-void comandoCambiarPuntos(){
+int comandoGetNumAlquileres(SOCKET* s, Usuario &u){
+	char sendBuff[512], recvBuff[512];
 
+	strcpy(sendBuff, "GET_NUM_ALQUILERES");
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+	strcpy(sendBuff, u.getDNI());
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	return atoi(recvBuff);
+
+}
+
+void comandoCambiarPuntos(SOCKET *s, Usuario &u, int numPuntos){
+	char sendBuff[512], recvBuff[512], numPuntosArray[3];
+
+	strcpy(sendBuff, "UPDATE_PUNTOS");
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	strcpy(sendBuff, u.getDNI());
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	itoa(numPuntos, numPuntosArray, 10);
+	strcpy(sendBuff, numPuntosArray);
+	send(*s, sendBuff, sizeof(sendBuff), 0);
+
+	recv(*s, recvBuff, sizeof(recvBuff), 0);
+	cout << recvBuff << endl;
 }
