@@ -161,3 +161,4 @@ void comandoCambiarPuntos(SOCKET *s, Usuario &u, int numPuntos){
 	recv(*s, recvBuff, sizeof(recvBuff), 0);
 	cout << recvBuff << endl;
 }
+
