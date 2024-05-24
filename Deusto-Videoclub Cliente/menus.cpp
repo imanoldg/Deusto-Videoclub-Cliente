@@ -351,7 +351,7 @@ void menuPuntos(SOCKET *s, Usuario u) {
 	Pelicula *p = new Pelicula();
 
 	listaPelis peliculas(p, numPeliculas);
-
+	cout << "numPelis: " << numPeliculas;
 	comandoGetAlquileres(s, u, peliculas, numPeliculas);
 
 	for (int i = 0; i < peliculas.getNumPeliculas(); ++i) {
